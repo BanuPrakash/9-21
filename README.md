@@ -308,3 +308,18 @@ A record class is a special type for DTO. Read only object / immutable objects
 ```
 
 Lombak: @Data, @NoArgsConstructor, ... --> Target Type
+
+Java 9: New methods in Streaming API: takeWhile() and dropwhile()
+
+Check the difference with filter()
+```
+    List<Integer> numbers  = ..
+
+    List<Integer> lessThanfive = numbers.stream()
+        .takeWhile(n -> n < 5)
+        .collect(Collectors.toList());
+
+
+```
+
+Resume @ 2:00 
