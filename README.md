@@ -6,7 +6,7 @@ Full Stack Architect, Corporate Trainer
 Co-founder & Ex-CTO: Lucida Technologies Pvt Ltd.,
 Email: banuprakashc@yahoo.co.in; banuprakash.cr@gmail.com; banu@lucidatechnologies.com
 https://www.linkedin.com/in/banu-prakash-50416019/
-https://github.com/BanuPrakash/21_SPRING
+https://github.com/BanuPrakash/9-21
 ```
 
 Softwares Required:
