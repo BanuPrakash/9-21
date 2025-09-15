@@ -178,3 +178,47 @@ CMD ["java", "-jar", "your-application.jar"]
 Empty Project: modules
 mylib and clientmodules are created
 clientmodule --> Project Structure --> Modules --> dependencies --> Module path --> mylib
+
+====
+
+To Compile:
+javac --module-source-path src -m mylib out
+
+to Execute:
+java --module-path out -m clientModule/client.Main
+
+============================
+
+JPMS Maven Multi-module project. Also ServiceLocator pattern.
+
+Java Maven Project :maven-jpms
+
+api module has one interface LogService and in module-info we exported
+
+impl module requires api module.
+```
+ <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+module impl {
+    requires api;
+    exports com.cisco.api.impl;
+    provides LogService with LogServiceStdOutImpl;
+}
+```
+mvn package [pom level] creates jar files in target.
+copied all jars into total folder
+rename jars
+
+In Total folder:
+
+jlink --module-path api.jar:impl.jar:client.jar --add-modules client,api,impl --output myimage --launcher MYAPP=client/client.Main 
+
+
+%myimage sh ./MYAPP 
+Log Std Good Day!!!
+
+
