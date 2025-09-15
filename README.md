@@ -322,4 +322,63 @@ Check the difference with filter()
 
 ```
 
-Resume @ 2:00 
+Recap:
+1) modules JPMS
+2) Pattern matching
+3) record
+4) takeWhile, dropWhile
+5) var keyword
+6) try with resource
+7) improved NullPointerException
+
+=================
+
+Java 17: Sealed class
+Introduced in Java 15 as preview and finalized in Java 17.
+Explicit control over which classes can extend or implement a class /interface
+
+Why Sealed class?
+* Prevent unwanted subclassing. Better modeling
+* Safer Switch and pattern matching
+* Better API contract
+* Better Tooling : IDEs can give warnings and completions
+
+```
+ public sealed class JsonValue permits JsonObject, JsonArray, JsonPrimitive {
+    ...
+ }
+
+ public class SomeJson extends JsonValue { // error
+ }
+
+ public final class JsonObject extends JsonValue {
+    ..
+ }
+
+ public sealed class JsonPrimitive permits JsonNumber, JsonString, JsonBoolean {
+
+ }
+ subclasses from sealed class can be sealed, nonsealed or final
+```
+
+Node DOM elements:
+
+```
+ public sealed class Node permits Element, Text, CDATASection, Comment {
+    ...
+ }
+
+ public final Text extends Node {
+
+ }
+
+ public non-sealed class Element extends Node {
+    ...
+ }
+
+ We can allow arbitrary subclasses of Element
+
+ public CustomerElement extends Element {
+    
+ }
+```
