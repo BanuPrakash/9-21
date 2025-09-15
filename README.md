@@ -230,7 +230,81 @@ META-INF/MANIFEST.MF -- here you can mention module name
 
 =============
 
+JPMS:
+* Better Encapsulation
+* More readable
+* Smaller footprint [jlink]
 
+ requires static lombok; --> required only for compilation
 
+Expose for Reflection API:
+opens com.example.springjpmsdemo to spring.core, spring.beans, spring.context;
 
+opens com.example.demo.entity to org.hibernate; [ORM mapping]
 
+========
+
+Java 9: Improved try with resource Blocks
+
+Prior to Java 9:
+```
+ try(Resource rs = new Resource()) {
+    ...
+ }
+
+ no need for finally block provided Resourec is AutoCloseable, close () of rs will be called
+```
+Java 9:
+
+```
+ public void doTask(Resource rs) {
+    try (rs) {
+
+    }
+ }
+
+ class MyThread extends Thread implements AutoClosable {
+    ...
+
+    @Override
+    public void close() throws Exception {
+        ...
+    }
+ }
+```
+
+Java 10: var keyword
+
+var is an inferred type. Compiler will infer the type.
+also var is not a keyword [int var = 100; valid]
+
+```
+    static Map<String,List<Integer>> getData() {
+        ...
+    }
+
+    main() {
+        Map<String, List<Integer>> data = getData(); 
+        // Type Inference with var
+        var data = getData();
+    }
+
+    var str = "Hello World"; // string
+    str = 100; // not valid
+    var obj = null; // not valid
+```
+
+Java 13 and 17: Pattern Matching
+
+Java 14: record type
+A record class is a special type for DTO. Read only object / immutable objects
+
+```
+ // parameterized constructor
+ // getters
+ // hashCode and equals
+ // toString
+ public record Product(int id, String title, double price) {}
+```
+
+Lombak: @Data, @NoArgsConstructor, ... --> Target Type
