@@ -426,3 +426,18 @@ java -XX:ArchiveClassesAtExit=./application.jsa -XX:DumpLoadedClassList=files.ls
  java -XX:SharedArchiveFile=./application.jsa -jar spring-petclinic-3.5.0-SNAPSHOT.jar
 
 Started PetClinicApplication in 2.563 seconds 
+
+==============
+
+Java 21 Preview: String Template
+
+Project Settings -> Project -> Project Language --> Java 21 Preview
+
+===================
+
+* HttpClient
+* JFR
+* Virtual Threads
+* Hidden Classes
+* Simple Server for the web
+* G1GC vs ZGC
