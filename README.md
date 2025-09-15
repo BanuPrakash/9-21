@@ -379,6 +379,50 @@ Node DOM elements:
  We can allow arbitrary subclasses of Element
 
  public CustomerElement extends Element {
-    
+
  }
 ```
+
+Class Data Sharing and Application Data Sharing
+
+Java 9 --> CDS Stable and part of default system [for JDK related classes]
+
+java -Xshare:dump pkg.YourClass
+would create classlist and classes.jsa 
+
+/jdk-21/lib/server/classes.jsa [ archived file of CDS]
+/jdk-21/lib/classlist [contains which all files are archvied for CDS]
+
+JRE --> ClassLoader
+findLoadedClass()
+loadClass() [ file handling]
+verifyClass() [ security and permission]
+defineClass() [ convert to Arch/platform specific code]
+findSystemClass() 
+
+Advantages:
+Reduced Startup time
+Lower Memory Footprint
+Improved Performance
+
+Java 12: Application Data Sharing
+
+Training Run [example exceute all RESTful endpoints] ==> app.jsa ==> Optimized Run
+
+
+Without ADS:
+
+spring-petclinic % ./mvnw clean package -Dmaven.test.skip=true
+java -jar target/spring-petclinic-3.5.0-SNAPSHOT.jar
+Started PetClinicApplication in 3.452 seconds (process running for 3.743)
+
+=====
+
+
+ When you set -Dspring.context.exit=onRefresh as a JVM system property, it instructs the Spring application to exit immediately after its onRefresh phase is complete
+
+java -XX:ArchiveClassesAtExit=./application.jsa -XX:DumpLoadedClassList=files.lst -Dspring.context.exit=onRefresh -jar spring-petclinic-3.5.0-SNAPSHOT.jar
+
+ java -XX:SharedArchiveFile=./application.jsa -jar spring-petclinic-3.5.0-SNAPSHOT.jar
+
+Started PetClinicApplication in 2.563 seconds 
