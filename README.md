@@ -221,4 +221,16 @@ jlink --module-path api.jar:impl.jar:client.jar --add-modules client,api,impl --
 %myimage sh ./MYAPP 
 Log Std Good Day!!!
 
+=========
+
+Automatic Modules:
+Add your normal jars into module-path instead of class-path
+Jar if added into module-path takes the name of JAR as module OR
+META-INF/MANIFEST.MF -- here you can mention module name
+
+=============
+
+
+
+
 
