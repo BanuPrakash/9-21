@@ -526,3 +526,29 @@ ab -c 100 -n 200 http://localhost:8080/hello2
 ab -c 100 -n 200 http://localhost:8080/hello3
 
 jfr print --events HttpRequest spring.jfr
+
+actuator
+io.micrometer
+prometheius / Grafana
+
+===========
+
+Hidden Classes: Java 15
+* Runtime only: Not present in source or .class file
+* non discoverable: not accessible via reflection or classpath
+* Internal: meant for frameworks / tool use - not for everyday java code.
+* GC: automatically cleand up when no longer referenced.
+
+Purpose: Bytecode manipulation
+
+Bytebuddy / Javaassist/ CGLib: code generation and manipulation library for creating and modifying Java classes during the runtime of a Java application and without the help of a compiler.
+
+context.getBeanDefinitions(); 
+
+Hidden Class: Runtime; Not visible via reflection; one-time per lookup; for frameworks and tools;
+
+Anonymous class : Compiletime; fully visible; resuable; logic
+
+
+
+
