@@ -425,7 +425,7 @@ java -XX:ArchiveClassesAtExit=./application.jsa -XX:DumpLoadedClassList=files.ls
 
  java -XX:SharedArchiveFile=./application.jsa -jar spring-petclinic-3.5.0-SNAPSHOT.jar
 
-Started PetClinicApplication in 2.563 seconds 
+Started PetClinicApplication in 2.563 seconds / 1.563 seconds
 
 ==============
 
@@ -435,9 +435,94 @@ Project Settings -> Project -> Project Language --> Java 21 Preview
 
 ===================
 
+java -XX:ArchiveClassesAtExit=./application.jsa -XX:DumpLoadedClassList=files.lst -Dspring.context.exit=onRefresh -jar \
+spring-petclinic-3.5.0-SNAPSHOT/spring-petclinic-3.5.0-SNAPSHOT.jar
+
+
+Recap of Day 1:
+1) JPMS; modularity , less footprint
+2) sealed class/ interface; permits, final, non-sealed
+3) record: DTO, immutable objects
+4) CDS and AppDS 
+5) pattern matching [instanceof, arrow operator, yield]
+6) return switch()
+7) var keyword: type inference at compile time
+8) Java 21 Preview feature: String Template
+
+=======
+
+Day 2:
+
 * HttpClient
 * JFR
 * Virtual Threads
 * Hidden Classes
 * Simple Server for the web
 * G1GC vs ZGC
+
+ // var with type annotations
+    Function<String, String> func = (s) -> s.toUpperCase(); // type inference
+    Function<String, String> func = (@Nonnull  String s) -> s.toUpperCase();
+    Function<String, String> func = (@Nonnull  var s) -> s.toUpperCase();
+    BiFunction<String, String, String> biFunc = (@Nonnull var s1, @Nullable var s2) -> s1 + s2;
+
+===============
+
+HttpClient: Java 11, can be used instead of external libraries ApacheHttpClient, Spring boot: RestTemplate / WebClient / RestClient.
+HttpClient supports Async operations
+
+============
+
+JDK Flight Recorder (JFR) -- Java 11 open source
+
+BEA: JFR -- Commercial use.
+
+JFR is an observability and monitoring framework integrated directly into JVM.
+
+Key Characteristics of JFR:
+1) Event-based tracing
+2) Low overhead: for production
+3) Integrated with JDK Mission Control (JMC)
+4) Custom events
+
+Anotomy of JFR event: EventID, Timestamp, Duration, threadID, Stack Trace, Event specific payload.
+
+```
+    class MyEvent extends Event {
+        String message;
+        int value;
+    }
+
+    void doSomeThing() {
+        MyEvent event = new MyEvent();
+        event.message = ...
+        event.value = 225;
+        event.begin();
+            // actual task
+        event.commit();
+    }
+```
+
+JFR Annotations:
+1) @Name
+2) @Label
+3) @Description
+4) @Category
+5) @Enabled [ default true]
+6) @StackTrace
+... jdk.jfr.* 
+
+~140 event types in JRE
+
+Java 14: allowed streaming JFR events, prior to this we had to stop application to record [we could only profile and not monitor]
+
+java -XX:StartFlightRecording=filename=cpu.jfr demo.CPULoadGenerator    
+jfr print --events CPULoad cpu.jfr
+
+
+ab -c 100 -n 200 http://localhost:8080/hello
+ab -c 100 -n 200 http://localhost:8080/hello1
+ab -c 100 -n 200 http://localhost:8080/hello2
+ab -c 100 -n 200 http://localhost:8080/hello3
+
+jfr print --events HttpRequest spring.jfr
