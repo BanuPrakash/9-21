@@ -25,6 +25,7 @@ public class HiddenClassExample {
         var hidden = lookup.defineHiddenClass(classfileBytes, true,
                 MethodHandles.Lookup.ClassOption.NESTMATE);
 
+        // proxy class avaialble only at runtime
         Class<?> interceptorClass = hidden.lookupClass();
 
         // instantiate hidden class

@@ -549,6 +549,54 @@ Hidden Class: Runtime; Not visible via reflection; one-time per lookup; for fram
 
 Anonymous class : Compiletime; fully visible; resuable; logic
 
+====================
+
+Virtual Threads: lightweight threads and created by JVM. not managed by OS.
+thousands of virtual threads can be created without worryning about memory.
+
+How do they work?
+* start a virtual thread to handle a task
+* if it needs to wait for (DB or API), the JVM parks it.
+* real OS thread is freed and can be used for other works
+* when response comes back, JVM resumes Virtual thread and can engage OS kernel threads trho platform thread
+
+virtual threads perfect for I/O heavy tasks
+
+From Spring Boot 3.x --> Java 21
+application.properties
+spring.threads.virtual.enabled=true // Whether to use virtual threads.
+@EnableAsync
+@Async
+
+===========
+
+Last of Generational Garbage Collector - G1GC [default]
+
+1)java -XX:+UseEpsilonGC MyClass
+Here GC supports memory allocation, but not collect unused objects.
+
+java -XX:+G1GC MyClass
+java -XX:+ZGC MyClass
 
 
+Card Table: Region internal structure. region has 9 cards
+Each region Remember Set [RSet]
 
+Young GC Process: Stop the World [STW]
+
+Mixed GC:
+Three Color Algorithim
+
+White: Object is not checked
+Gray: Object is checked, its fields members are not checked
+Black: Object is checked, field is also checked
+
+========
+
+ZGC: not generational
+64 bit address
+first 42 bits are for address [64TB]
+
+43 to 46 bits are used to store additional information indicating which GC phase the object is in under ZGC
+
+Pointers coloring
